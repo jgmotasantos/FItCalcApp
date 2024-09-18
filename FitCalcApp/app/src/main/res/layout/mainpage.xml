@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainpage"
+    android:layout_width="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:background="@color/grey"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bem-Vindo ao FitCalc!"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/buttonCalcularIMC"
+        android:layout_width="225dp"
+        android:layout_height="wrap_content"
+        android:text="Calcular IMC" />
+
+    <Button
+        android:id="@+id/buttonCalcularPesoIdeal"
+        android:layout_width="227dp"
+        android:layout_height="wrap_content"
+        android:text="Calcular Peso Ideal" />
+
+    <Button
+        android:id="@+id/buttonCalcularAlturaIdeal"
+        android:layout_width="227dp"
+        android:layout_height="wrap_content"
+        android:text="Calcular ALtura Ideal" />
+
+</LinearLayout>

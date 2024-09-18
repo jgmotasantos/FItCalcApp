@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/calc_altura"
+    android:layout_width="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:background="@color/grey"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Calculadora de IMC"
+        android:textColor="@color/white" />
+
+    <EditText
+        android:id="@+id/TextPesoTelaAltura"
+        android:layout_width="255dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:textColor="@color/white"
+        android:inputType="text"
+        android:text="Digite seu peso (Kg):" />
+
+    <RadioGroup
+        android:id="@+id/alturaOptions"
+        android:layout_width="229dp"
+        android:layout_height="108dp">
+
+        <RadioButton
+            android:textColor="@color/white"
+            android:id="@+id/radioButtonHomemTelaAltura"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sou Homem" />
+
+        <RadioButton
+            android:textColor="@color/white"
+            android:id="@+id/radioButtonMulherTelaAltura"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sou Mulher" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/buttonCalcularAlturaPage"
+        android:layout_width="188dp"
+        android:layout_height="wrap_content"
+        android:text="Calcular" />
+
+    <Button
+        android:id="@+id/buttonVoltarAlturaPage"
+        android:layout_width="141dp"
+        android:layout_height="wrap_content"
+        android:text="Voltar" />
+
+</LinearLayout>
