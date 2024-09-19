@@ -1,5 +1,7 @@
 package br.uniceub.cc.pdm.fitcalcapp;
 
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -45,9 +47,9 @@ public class MainActivity extends AppCompatActivity {
     public Button voltarALturaPage;
     public LinearLayout calc_altura;
     public RadioGroup altura_options;
+    public
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.mainpage);
@@ -129,8 +131,29 @@ public class MainActivity extends AppCompatActivity {
                     case MotionEvent.ACTION_UP:
                         x2 = event.getX();
 
-                        if (x2 - x1 > 100) {
-                            CarregarTelaPrincipal();
+                        if (x2 - x1 > 100) { // Swipe para a direita
+                            Animation slideOutLeft = AnimationUtils.loadAnimation(MainActivity.this, R.anim.slide_out_left);
+                            Animation slideInRight = AnimationUtils.loadAnimation(MainActivity.this, R.anim.slide_in_right);
+
+                            calc_imc.startAnimation(slideOutLeft);
+
+                            new android.os.Handler().postDelayed(() -> {
+                                CarregarCalculadoraPesoIdeal();
+                                LinearLayout calc_peso_layout = findViewById(R.id.calc_peso_layout); // Atualize a referência
+                                calc_peso_layout.startAnimation(slideInRight);
+                            }, slideOutLeft.getDuration()); // Ajuste o delay conforme necessário
+                        }
+                        if (x1 - x2 > 100) { // Swipe para a esquerda
+                            Animation slideOutLeft = AnimationUtils.loadAnimation(MainActivity.this, R.anim.slide_out_left);
+                            Animation slideInRight = AnimationUtils.loadAnimation(MainActivity.this, R.anim.slide_in_right);
+
+                            calc_imc.startAnimation(slideOutLeft);
+
+                            new android.os.Handler().postDelayed(() -> {
+                                CarregarCalculadoraPesoIdeal();
+                                LinearLayout calc_peso = findViewById(R.id.calc_peso_layout); // Atualize a referência
+                                calc_peso.startAnimation(slideInRight);
+                            }, slideOutLeft.getDuration()); // Ajuste o delay conforme necessário
                         }
                         return true;
                     default:
@@ -139,6 +162,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
 
     private void calcularIMC() {
         String pesoStr = Peso.getText().toString();
@@ -206,7 +231,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Limpar o campo de altura quando o usuário clicar
         AlturaTelaPeso.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -214,7 +238,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Ação de calcular o peso ideal
         calcularPesoIdealTelaPeso.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -253,8 +276,29 @@ public class MainActivity extends AppCompatActivity {
                     case MotionEvent.ACTION_UP:
                         x2 = event.getX();
 
-                        if (x2 - x1 > 100) {
-                            CarregarTelaPrincipal();
+                        if (x2 - x1 > 100) { // Swipe para a direita
+                            Animation slideOutLeft = AnimationUtils.loadAnimation(MainActivity.this, R.anim.slide_out_left);
+                            Animation slideInRight = AnimationUtils.loadAnimation(MainActivity.this, R.anim.slide_in_right);
+
+                            calc_peso_layout.startAnimation(slideOutLeft);
+
+                            new android.os.Handler().postDelayed(() -> {
+                                CarregarCalculadoraIMC();
+                                LinearLayout calc_imc = findViewById(R.id.calc_imc); // Atualize a referência
+                                calc_imc.startAnimation(slideInRight);
+                            }, slideOutLeft.getDuration()); // Ajuste o delay conforme necessário
+                        }
+                        if (x1 - x2 > 100) { // Swipe para a esquerda
+                            Animation slideOutLeft = AnimationUtils.loadAnimation(MainActivity.this, R.anim.slide_out_left);
+                            Animation slideInRight = AnimationUtils.loadAnimation(MainActivity.this, R.anim.slide_in_right);
+
+                            calc_peso_layout.startAnimation(slideOutLeft);
+
+                            new android.os.Handler().postDelayed(() -> {
+                                CarregarCalculadoraAlturaIdeal();
+                                LinearLayout calc_altura = findViewById(R.id.calc_altura); // Atualize a referência
+                                calc_altura.startAnimation(slideInRight);
+                            }, slideOutLeft.getDuration()); // Ajuste o delay conforme necessário
                         }
                         return true;
                     default:
@@ -265,14 +309,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
     public void CarregarCalculadoraAlturaIdeal() {
         setContentView(R.layout.calc_altura);
 
+        // Iniciar a animação do gradiente em movimento
+        LinearLayout layout = findViewById(R.id.calc_altura);
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.trasnlate_anim);
+        layout.startAnimation(animation);
+
+        voltarALturaPage = findViewById(R.id.buttonVoltarAlturaPage);
         TextIMCTelaAltura = findViewById(R.id.TextPesoTelaAltura);
         calculaAlturaIdealTelaAltura = findViewById(R.id.buttonCalcularAlturaPage);
         altura_options = findViewById(R.id.alturaOptions);
 
-        // Limpar o campo de peso quando o usuário clicar
+        voltarALturaPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CarregarTelaPrincipal();
+            }
+        });
+
         TextIMCTelaAltura.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -280,7 +337,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Ação de calcular a altura ideal
         calculaAlturaIdealTelaAltura.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -302,10 +358,8 @@ public class MainActivity extends AppCompatActivity {
                     imcIdeal = 22.7f;
                 }
 
-                // Calcula a altura ideal usando a fórmula do "meme"
                 float alturaIdeal = (float) Math.sqrt(peso / imcIdeal);
 
-                // Resultado descontraído
                 String resultado;
                 if (alturaIdeal < 1.5) {
                     resultado = "Wow! Parece que sua altura ideal seria digna de um hobbit! 🧙‍♂️";
@@ -315,7 +369,6 @@ public class MainActivity extends AppCompatActivity {
                     resultado = "Altura ideal de gigante detectada! 🦸‍♂️ Quase alcançando as nuvens!";
                 }
 
-                // Exibe o resultado
                 Toast.makeText(MainActivity.this, "Sua altura ideal seria: " + String.format("%.2f", alturaIdeal) + " metros. " + resultado, Toast.LENGTH_LONG).show();
             }
         });
@@ -331,8 +384,23 @@ public class MainActivity extends AppCompatActivity {
                     case MotionEvent.ACTION_UP:
                         x2 = event.getX();
 
-                        if (x2 - x1 > 100) {
-                            CarregarTelaPrincipal();
+                        if (x2 - x1 > 100) { // Swipe para a direita
+                            Animation slideOutLeft = AnimationUtils.loadAnimation(MainActivity.this, R.anim.slide_out_left);
+                            Animation slideInRight = AnimationUtils.loadAnimation(MainActivity.this, R.anim.slide_in_right);
+
+                            calc_altura.startAnimation(slideOutLeft);
+                            calc_peso_layout.startAnimation(slideInRight);
+
+                            CarregarCalculadoraPesoIdeal();
+                        }
+                        if (x1 - x2 > 100) { // Swipe para a esquerda
+                            Animation slideOutLeft = AnimationUtils.loadAnimation(MainActivity.this, R.anim.slide_out_left);
+                            Animation slideInRight = AnimationUtils.loadAnimation(MainActivity.this, R.anim.slide_in_right);
+
+                            calc_altura.startAnimation(slideOutLeft);
+                            calc_imc.startAnimation(slideInRight);
+
+                            CarregarCalculadoraIMC();
                         }
                         return true;
                     default:
@@ -341,5 +409,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 
 }
