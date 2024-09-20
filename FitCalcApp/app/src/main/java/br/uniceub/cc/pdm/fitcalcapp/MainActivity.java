@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -52,12 +51,12 @@ public class MainActivity extends AppCompatActivity {
     @Override void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.mainpage);
+        setContentView(R.layout.tela_principal);
         CarregarTelaPrincipal();
     }
 
     public void CarregarTelaPrincipal() {
-        setContentView(R.layout.mainpage);
+        setContentView(R.layout.tela_principal);
         buttonCalcularIMC = findViewById(R.id.buttonCalcularIMC);
         buttonCalcularIMC.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void CarregarCalculadoraIMC() {
-        setContentView(R.layout.calc_imc);
+        setContentView(R.layout.calculadora_imc);
 
         voltarIMCPage = findViewById(R.id.buttonVoltarIMCPage);
         Peso = findViewById(R.id.TextPeso);
@@ -217,7 +216,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void CarregarCalculadoraPesoIdeal() {
-        setContentView(R.layout.calc_peso);
+        setContentView(R.layout.calculadora_peso_ideal);
 
         voltarPesoPage = findViewById(R.id.buttonVoltarPesoPage);
         AlturaTelaPeso = findViewById(R.id.TextAlturaTelaPeso);
@@ -311,7 +310,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void CarregarCalculadoraAlturaIdeal() {
-        setContentView(R.layout.calc_altura);
+        setContentView(R.layout.calculadora_altura_ideal);
 
         // Iniciar a animação do gradiente em movimento
         LinearLayout layout = findViewById(R.id.calc_altura);
